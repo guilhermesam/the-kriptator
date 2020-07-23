@@ -7,7 +7,8 @@ public class CaesarCipher {
      * which shifted each letter 2 places further through the alphabet (e.g. 'A'
      * shifts to 'C', 'R' shifts to 'T', etc.). At the end of the alphabet we wrap
      * around, that is 'Y' shifts to 'A'. We can, of course, try shifting by any
-     * number.
+     * number
+     * TODO: Tratar a string de entrada;
      */
 
     private String switchAlphabetRoot(int times) {
@@ -34,7 +35,6 @@ public class CaesarCipher {
         return messageEncrypted;
     }
 
-    //zyxwvutsrqponmlkjihgfedcab
     public StringBuffer decrypt(String cipher, int shift) {
         shift = 26 - shift;
         StringBuffer result = new StringBuffer();
@@ -51,55 +51,5 @@ public class CaesarCipher {
             }
         }
         return result;
-    }
-
-    public void main() {
-        
-        Scanner input = new Scanner(System.in);
-        String message;
-        int times;
-        char option, proceed;
-
-        do {
-            System.out.println("Caesar Cypher 1.0.0");
-            
-            do {
-                System.out.println("How many shifties?");
-                times = input.nextInt();
-            }
-            while (times > 26 || times < 0);
-            
-            System.out.println("Do you want to encrypt or decrypt?");
-            System.out.println("D - Decrypt");
-            System.out.println("E - Encrypt");
-            option = input.next().toUpperCase().charAt(0);
-
-            if (option == 'E') {
-                System.out.println("Type a message without spaces: ");
-                message = input.next();
-                System.out.println("The message encrypted is: " + encrypt(message, times));
-            }
-
-            else if (option == 'D') {
-                System.out.println("Type a message without spaces: ");
-                message = input.next();
-                System.out.println("The message decrypted is: " + decrypt(message, times));
-            }
-
-            else {
-                System.err.println("Incorrect operation!");
-            }
-
-            System.out.println("Do you want to try again?");
-            proceed = input.next().toUpperCase().charAt(0);
-        }
-
-        while(proceed == 'Y');
-            input.close();
-    }
-
-    public static void main(String[] args) {
-        CaesarCipher c = new CaesarCipher();
-        c.main();
     }
 }
