@@ -3,3 +3,4 @@
 .vscode
 out
 the-kriptator.iml
+__pycache__/
