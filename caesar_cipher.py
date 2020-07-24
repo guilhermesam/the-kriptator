@@ -1,4 +1,3 @@
-import re
 import enchant
 
 """
@@ -114,5 +113,3 @@ def main():
 
     print(COLORS['YELLOW'] + 'Farewell :)')
 
-
-main()
