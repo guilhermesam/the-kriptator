@@ -1,3 +1,6 @@
+import re
+import enchant
+
 """
 Julius Caesar used a system of cryptography, now known as Caesar Cipher,
 which shifted each letter 2 places further through the alphabet (e.g. 'A'
@@ -6,9 +9,22 @@ around, that is 'Y' shifts to 'A'. We can, of course, try shifting by any
 number.
 """
 
-# TODO: Verificar existência de libs de NLP, regulamentar entrada de dados, alterar cores do terminal;
-
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
+COLORS = {
+    'RED': '\033[31m',
+    'GREEN': '\033[32m',
+    'YELLOW': '\033[33m',
+    'MAGENTA': '\033[35m',
+    'RESET': '\033[0;0m'
+}
+
+
+def filter_input(message):
+    symbols = [',', '!', '.', '@', '/', '?']
+    for symbol in symbols:
+        message = message.replace(symbol, '')
+    message = message.replace(' ', '-')
+    return message
 
 
 def switch_alphabet_root(times):
@@ -18,13 +34,22 @@ def switch_alphabet_root(times):
 
 
 def hack(message):
-    for execution in range(0, 27):
-        print(f"Try#{execution}", decrypt(message, execution).replace("-", " "))
+    dictionary = enchant.Dict('en-US')
+    attempts = list()
+    for execution in range(1, 28):
+        if dictionary.check(decrypt(message, execution).split('-')[0]):
+            attempts.append(COLORS['YELLOW'] + f"Try#{execution}: " + decrypt(message, execution).
+                            replace("-", " "))
+        else:
+            attempts.append(COLORS['MAGENTA'] + f"Try#{execution}: " + COLORS['RESET'] + decrypt(message, execution).
+                            replace("-", " "))
+    return attempts
 
 
 def encrypt(message, times):
     message_encrypted_vector = list()
-    words = message.split(" ")
+    message = filter_input(message)
+    words = message.split("-")
     result = list()
 
     for word in words:
@@ -39,7 +64,7 @@ def encrypt(message, times):
 
 
 def decrypt(message, times):
-    message = message.replace(" ", "-")
+    message = filter_input(message)
     message_encrypted_vector = list()
     words = message.split("-")
     result = list()
@@ -55,4 +80,36 @@ def decrypt(message, times):
     return "".join(result)[:-1]
 
 
-hack("fcjjm-kw-lykc-gq-esgjfcpkc-ylb-g-jgic-amddcc")
+def main():
+    print(COLORS['GREEN'] + '==== Welcome to Caesar Cipher Decoder ====' + COLORS['RESET'])
+    run = True
+
+    while run:
+        print('what operation do you want to perform ?')
+        print('1: Encrypt')
+        print('2: Decrypt')
+        print('3: Decrypt (without passing number of shifties)')
+        operation = int(input(''))
+
+        if operation == 1:
+            message = input('Type a message: ')
+            times = int(input('Type the number os shifties: '))
+            print(encrypt(message, times))
+
+        elif operation == 2:
+            message = input('Type a message: ')
+            times = int(input('Type the number os shifties: '))
+            print(decrypt(message, times))
+
+        elif operation == 3:
+            message = input('Type a message: ')
+            for string in hack(message):
+                print(string)
+
+        else:
+            print('insert an valid operation!' + '\n')
+
+        run = input('Do you want to ' + COLORS['MAGENTA'] + 'continue?' + COLORS['RESET'] + '(y/n)')
+
+
+main()
