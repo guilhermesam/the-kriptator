@@ -82,13 +82,14 @@ def decrypt(message, times):
 
 def main():
     print(COLORS['GREEN'] + '==== Welcome to Caesar Cipher Decoder ====' + COLORS['RESET'])
-    run = True
+    run = "y"
 
-    while run:
+    while run == 'y':
         print('what operation do you want to perform ?')
         print('1: Encrypt')
         print('2: Decrypt')
         print('3: Decrypt (without passing number of shifties)')
+        print('', end='--> ')
         operation = int(input(''))
 
         if operation == 1:
@@ -109,7 +110,9 @@ def main():
         else:
             print('insert an valid operation!' + '\n')
 
-        run = input('Do you want to ' + COLORS['MAGENTA'] + 'continue?' + COLORS['RESET'] + '(y/n)')
+        run = input('Do you want to ' + COLORS['MAGENTA'] + 'try again? ' + COLORS['RESET'] + '(y/n) ' + '\n').lower()
+
+    print(COLORS['YELLOW'] + 'Farewell :)')
 
 
 main()
