@@ -1,4 +1,4 @@
-from caesar_cipher import switch_alphabet_root
+from utils import switch_alphabet_root
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 COLORS = {
@@ -8,6 +8,7 @@ COLORS = {
     'MAGENTA': '\033[35m',
     'RESET': '\033[0;0m'
 }
+
 
 def generate_table():
     table = list()
@@ -25,6 +26,10 @@ def encrypt(key, message):
         encrypted_message.append(switch_alphabet_root(y)[x])
 
     return "".join(encrypted_message)
+
+
+def main():
+    pass
 
 
 print(encrypt('bom', 'bom'))

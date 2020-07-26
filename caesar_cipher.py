@@ -1,4 +1,5 @@
 import enchant
+from utils import *
 
 """
 Julius Caesar used a system of cryptography, now known as Caesar Cipher,
@@ -9,27 +10,6 @@ number.
 """
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
-COLORS = {
-    'RED': '\033[31m',
-    'GREEN': '\033[32m',
-    'YELLOW': '\033[33m',
-    'MAGENTA': '\033[35m',
-    'RESET': '\033[0;0m'
-}
-
-
-def filter_input(message):
-    symbols = [',', '!', '.', '@', '/', '?']
-    for symbol in symbols:
-        message = message.replace(symbol, '')
-    message = message.replace(' ', '-')
-    return message
-
-
-def switch_alphabet_root(times):
-    pt1 = ALPHABET[times:len(ALPHABET)]
-    pt2 = ALPHABET[0: times]
-    return pt1 + pt2
 
 
 def hack(message):
@@ -37,24 +17,32 @@ def hack(message):
     attempts = list()
     for execution in range(1, 28):
         if dictionary.check(decrypt(message, execution).split('-')[0]):
-            attempts.append(COLORS['YELLOW'] + f"Try#{execution}: " + decrypt(message, execution).
+            attempts.append(export_colors()['YELLOW'] + f"Try#{execution}: " + decrypt(message, execution).
                             replace("-", " "))
         else:
-            attempts.append(COLORS['MAGENTA'] + f"Try#{execution}: " + COLORS['RESET'] + decrypt(message, execution).
-                            replace("-", " "))
+            attempts.append(export_colors()['MAGENTA'] + f"Try#{execution}: " + export_colors()['RESET'] +
+                            decrypt(message, execution).replace("-", " "))
     return attempts
 
 
 def encrypt(message, times):
+
+    if times > 26:
+        times = times % 26
+
     message_encrypted_vector = list()
     message = filter_input(message)
     words = message.split("-")
     result = list()
+    symbols = ['"', '(', ')']
 
     for word in words:
         for letter in word:
-            index = ALPHABET.index(letter)
-            message_encrypted_vector.append(switch_alphabet_root(times)[index])
+            if letter in symbols:
+                message_encrypted_vector.append(letter)
+            else:
+                index = ALPHABET.index(letter)
+                message_encrypted_vector.append(switch_alphabet_root(times)[index])
         message_encrypted_vector.append("-")
 
     result.append("".join(message_encrypted_vector))
@@ -67,11 +55,15 @@ def decrypt(message, times):
     message_encrypted_vector = list()
     words = message.split("-")
     result = list()
+    symbols = ['"', '(', ')']
 
     for word in words:
         for letter in word:
-            index = ALPHABET.index(letter)
-            message_encrypted_vector.append(switch_alphabet_root(26 - times)[index])
+            if letter in symbols:
+                message_encrypted_vector.append(letter)
+            else:
+                index = ALPHABET.index(letter)
+                message_encrypted_vector.append(switch_alphabet_root(26 - times)[index])
         message_encrypted_vector.append("-")
 
     result.append("".join(message_encrypted_vector))
@@ -80,7 +72,7 @@ def decrypt(message, times):
 
 
 def main():
-    print(COLORS['GREEN'] + '==== Welcome to Caesar Cipher Decoder ====' + COLORS['RESET'])
+    print(export_colors()['GREEN'] + '==== Welcome to Caesar Cipher Decoder ====' + export_colors()['RESET'])
     run = "y"
 
     while run == 'y':
@@ -109,7 +101,10 @@ def main():
         else:
             print('insert an valid operation!' + '\n')
 
-        run = input('Do you want to ' + COLORS['MAGENTA'] + 'try again? ' + COLORS['RESET'] + '(y/n) ' + '\n').lower()
+        run = input('Do you want to ' + export_colors()['MAGENTA'] + 'try again? ' + export_colors()['RESET'] +
+                    '(y/n) ' + '\n').lower()
 
-    print(COLORS['YELLOW'] + 'Farewell :)')
+    print(export_colors()['YELLOW'] + 'Farewell :)')
 
+
+main()
