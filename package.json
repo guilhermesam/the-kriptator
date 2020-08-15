@@ -1,0 +1,22 @@
+{
+  "name": "the-kriptator",
+  "version": "1.0.0",
+  "description": "Application for using encryption techniques algorithms",
+  "main": "vigenereCipher.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guilhermesam/the-kriptator.git"
+  },
+  "author": "guilhermesam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guilhermesam/the-kriptator/issues"
+  },
+  "homepage": "https://github.com/guilhermesam/the-kriptator#readme",
+  "devDependencies": {
+    "jest": "^26.4.0"
+  }
+}

@@ -1,6 +1,6 @@
-.idea
-.metals
 .vscode
-out
+python
 the-kriptator.iml
 __pycache__/
+venv
+node_modules
