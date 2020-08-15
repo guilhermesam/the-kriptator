@@ -1,23 +1,7 @@
-function removeItemAll(arr, value) {
-    var i = 0;
-    while (i < arr.length) {
-      if (arr[i] === value) {
-        arr.splice(i, 1);
-      } else {
-        ++i;
-      }
-    }
-    return arr;
-}
+//const removeItemAll = require('../utils/removeItemAll');
 
-function filterInput(message) {
-    const symbols = [',', '!', '.', '@', '/', '?'];
-    message = message.split('');
-    symbols.forEach(symbol => {
-        message = removeItemAll(message, symbol);
-    });
-    
-    return message.join("");
+function filterInput(message) {    
+    return message.replace(' ','-');
 };
 
 module.exports = filterInput;
